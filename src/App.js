@@ -1,25 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import {Button, createTheme, Stack, ThemeProvider, Typography} from "@mui/material";
+import ForumIcon from '@mui/icons-material/Forum';
+import GoogleIcon from '@mui/icons-material/Google';
+
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark'
+    },
+});
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <ThemeProvider theme={darkTheme}>
+            <Stack spacing={2} style={{alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+                <ForumIcon style={{fontSize: '100px'}}/>
+                <Typography variant='h3'>Messaging App</Typography>
+                <Button
+                    variant="contained"
+                    startIcon={<GoogleIcon/>}
+                    style={{marginTop: 40}}>
+                    Log In with Google
+                </Button>
+            </Stack>
+        </ThemeProvider>
+    );
 }
 
 export default App;
