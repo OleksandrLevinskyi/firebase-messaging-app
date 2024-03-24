@@ -1,5 +1,6 @@
 import {MessageCard} from "../components/MessageCard";
 import {Box, Typography} from "@mui/material";
+import { Timestamp } from "firebase/firestore";
 
 const messages = [
     {
@@ -7,14 +8,16 @@ const messages = [
         name: 'Alice',
         text: 'Hey, how are you?',
         image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false
+        isAuthor: false,
+        timestamp: Timestamp.fromDate(new Date())
     },
     {
         id: 2,
         name: 'Bob',
         text: 'I\'m good! How about you?',
         image: 'https://example.com/path-to-image-of-bob.jpg',
-        isAuthor: true
+        isAuthor: true,
+        timestamp: Timestamp.fromDate(new Date())
     }
 ];
 
@@ -25,9 +28,8 @@ export const MessagesPage = () => {
                 Messages
             </Typography>
             {
-                messages.map((msg, index) => (
-                    <MessageCard key={index} name={msg.name} message={msg.text} avatarSrc={msg.avatarSrc}
-                                 isAuthor={msg.isAuthor}/>
+                messages.map((message, index) => (
+                    <MessageCard key={index} message={message}/>
                 ))
             }
         </Box>
