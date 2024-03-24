@@ -47,32 +47,44 @@ export const MessagesPage = () => {
     };
 
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column', width: {sm: '90%', md: '50%'}, margin: 'auto'}}>
-            <Typography variant="h3" color="text.primary" textAlign="center" sx={{my: 3}}>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100vh',
+            width: {sm: '90%', md: '50%'},
+            margin: 'auto'
+        }}>
+            <Typography variant="h3" textAlign="center" sx={{backgroundColor: 'background.paper', p: 2}}>
                 Messages
             </Typography>
-            {
-                messages.map((message, index) => (
+
+            <Box sx={{
+                flexGrow: 1,
+                overflowY: 'auto',
+                width: '100%'
+            }}>
+                {messages.map((message, index) => (
                     <MessageCard key={index} message={message}/>
-                ))
-            }
+                ))}
+            </Box>
+
             <TextField
                 variant="outlined"
                 fullWidth
                 placeholder="Send a message..."
-                sx={{mx: 'auto', mt: 5, width: '90%'}}
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={handleKeyDown}
+                sx={{margin: 2}}
                 InputProps={{
                     endAdornment: (
                         <IconButton onClick={handleSend}>
                             <Send/>
                         </IconButton>
                     ),
-                    style: { borderRadius: '20px' },
+                    style: {borderRadius: '20px'},
                 }}
             />
         </Box>
     );
-}
+};

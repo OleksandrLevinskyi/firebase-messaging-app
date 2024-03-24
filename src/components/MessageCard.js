@@ -24,7 +24,7 @@ export const MessageCard = ({message}) => {
             background: 'transparent',
             boxShadow: 'none',
             flexDirection: message.isAuthor ? 'row-reverse' : 'row',
-            alignSelf: message.isAuthor ? 'flex-end' : 'flex-start'
+            marginLeft: message.isAuthor ? 'auto' : 0
         }}>
             <Avatar sx={{mx: 2}} src={message.avatarSrc} alt={message.name}/>
             <Box sx={{
