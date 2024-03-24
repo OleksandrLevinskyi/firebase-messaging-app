@@ -34,8 +34,6 @@ export const MessagesPage = () => {
 
     const setUp = async () => {
         await MessageManager.getAllObservable(setMessages);
-
-        scrollToBottom();
     }
 
     // useEffect cannot handle async operations; implementing setUp function is one of the common walk-arounds
@@ -44,6 +42,10 @@ export const MessagesPage = () => {
             .then(() => console.log('Set up was successful'))
             .catch((e) => console.log(`Set up failed: ${e}`));
     }, []);
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     return (
         <Box sx={{
