@@ -1,16 +1,12 @@
 import {Button, Stack, Typography} from "@mui/material";
 import ForumIcon from "@mui/icons-material/Forum";
 import GoogleIcon from "@mui/icons-material/Google";
-import {useNavigate} from "react-router-dom";
 import {blue} from "@mui/material/colors";
 import {AuthManager} from "../managers/AuthManager";
 
 export function LoginPage() {
-    let navigate = useNavigate();
-
     const handleLogin = async () => {
         await AuthManager.logIn();
-        navigate('/messages');
     };
 
     return <Stack spacing={2} style={{alignItems: "center", justifyContent: "center", height: "100vh"}}>

@@ -30,7 +30,6 @@ const dbMessages = [
 export const MessagesPage = () => {
     const [messages, setMessages] = useState(dbMessages);
     const [inputText, setInputText] = useState('');
-    let navigate = useNavigate();
     const messagesEndRef = useRef(null);
 
     const handleSend = () => {
@@ -54,11 +53,10 @@ export const MessagesPage = () => {
 
     const handleLogout = async () => {
         await AuthManager.logOut();
-        navigate('/');
     };
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
     };
 
     useEffect(() => {
@@ -99,7 +97,7 @@ export const MessagesPage = () => {
                 {messages.map((message, index) => (
                     <MessageCard key={index} message={message}/>
                 ))}
-                <div ref={messagesEndRef} />
+                <div ref={messagesEndRef}/>
             </Box>
 
             <TextField
