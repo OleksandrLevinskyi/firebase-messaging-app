@@ -1,4 +1,4 @@
-import {Avatar, Card, CardContent, Typography} from "@mui/material";
+import {Avatar, Box, Typography} from "@mui/material";
 import {blue, green} from "@mui/material/colors";
 
 export const MessageCard = ({message}) => {
@@ -16,7 +16,7 @@ export const MessageCard = ({message}) => {
     };
 
     return (
-        <Card sx={{
+        <Box sx={{
             display: 'flex',
             alignItems: 'center',
             mb: 2,
@@ -27,10 +27,12 @@ export const MessageCard = ({message}) => {
             alignSelf: message.isAuthor ? 'flex-end' : 'flex-start'
         }}>
             <Avatar sx={{mx: 2}} src={message.avatarSrc} alt={message.name}/>
-            <CardContent sx={{
+            <Box sx={{
                 flex: '1 1 auto',
                 backgroundColor: message.isAuthor ? green[100] : blue[100],
                 borderRadius: '20px',
+                py: 1,
+                px: 2,
                 textAlign: message.isAuthor ? 'right' : 'left'
             }}>
                 <Typography variant="subtitle1" color="text.secondary">
@@ -42,7 +44,7 @@ export const MessageCard = ({message}) => {
                 <Typography variant="caption" color="text.secondary" sx={{mt: 1}}>
                     {formatDate(message.timestamp)}
                 </Typography>
-            </CardContent>
-        </Card>
+            </Box>
+        </Box>
     );
 };
