@@ -33,8 +33,7 @@ export const MessagesPage = () => {
     };
 
     const setUp = async () => {
-        const messages = await MessageManager.getAll();
-        setMessages(messages);
+        await MessageManager.getAllObservable(setMessages);
 
         scrollToBottom();
     }

@@ -1,4 +1,4 @@
-import {collection, query, orderBy, getDocs, addDoc, serverTimestamp} from "firebase/firestore";
+import {addDoc, collection, getDocs, orderBy, query, serverTimestamp, onSnapshot} from "firebase/firestore";
 import {auth, db} from "../firebase";
 
 export class MessageManager {
@@ -19,8 +19,31 @@ export class MessageManager {
         });
     }
 
+    static getAllObservable(setter) {
+        const messageQuery = query(collection(db, this.collectionName), orderBy("timestamp", "asc"));
+
+        // Return the unsubscribe function so the caller can stop listening when needed
+        return onSnapshot(messageQuery, (querySnapshot) => {
+                const messages = querySnapshot.docs.map(doc => {
+                    const data = doc.data();
+                    return {
+                        id: doc.id,
+                        isAuthor: auth.currentUser && auth.currentUser.uid === data.authorId,
+                        ...data
+                    }
+                });
+
+                if (setter && typeof setter === 'function') {
+                    setter(messages);
+                }
+            },
+            (e) => {
+                console.error(`Error getting documents: ${e}`);
+            });
+    }
+
     static async create(message) {
-        const user = auth.currentUser; // ideal implementation is to store logged in user AuthContext and get a user from there
+        const user = auth.currentUser; // ideal implementation is to store logged-in user AuthContext and get a user from there
 
         const newMessageRecord = {
             text: message,
