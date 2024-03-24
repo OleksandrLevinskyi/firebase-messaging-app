@@ -26,7 +26,7 @@ export const MessageCard = ({message}) => {
             flexDirection: message.isAuthor ? 'row-reverse' : 'row',
             marginLeft: message.isAuthor ? 'auto' : 0
         }}>
-            <Avatar sx={{mx: 2}} src={message.avatarSrc} alt={message.name}/>
+            <Avatar sx={{mx: 2}} src={message.authorImage} alt={message.name}/>
             <Box sx={{
                 flex: '1 1 auto',
                 backgroundColor: message.isAuthor ? purple[100] : blue[100],
@@ -36,7 +36,7 @@ export const MessageCard = ({message}) => {
                 textAlign: message.isAuthor ? 'right' : 'left'
             }}>
                 <Typography variant="subtitle1" color="text.secondary">
-                    {message.isAuthor ? 'Me' : message.name}
+                    {message.isAuthor ? 'Me' : message.authorDisplayName}
                 </Typography>
                 <Typography variant="body1" color="text.primary">
                     {message.text}

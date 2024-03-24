@@ -1,53 +1,26 @@
 import {MessageCard} from "../components/MessageCard";
-import {AppBar, Box, IconButton, TextField, Toolbar, Typography} from "@mui/material";
+import {Box, IconButton, TextField, Typography} from "@mui/material";
 import {Timestamp} from "firebase/firestore";
 import {Logout, Send} from "@mui/icons-material";
 import {useEffect, useRef, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import ForumIcon from "@mui/icons-material/Forum";
-import {blue, purple} from "@mui/material/colors";
+import {blue} from "@mui/material/colors";
 import {AuthManager} from "../managers/AuthManager";
-
-const dbMessages = [
-    {
-        id: 1,
-        name: 'Alice',
-        text: 'Hey, how are you?',
-        image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false,
-        timestamp: Timestamp.fromDate(new Date())
-    },
-    {
-        id: 2,
-        name: 'Bob',
-        text: 'I\'m good! How about you?',
-        image: 'https://example.com/path-to-image-of-bob.jpg',
-        isAuthor: true,
-        timestamp: Timestamp.fromDate(new Date())
-    }
-];
+import {MessageManager} from "../managers/MessageManager";
 
 export const MessagesPage = () => {
-    const [messages, setMessages] = useState(dbMessages);
+    const [messages, setMessages] = useState([]);
     const [inputText, setInputText] = useState('');
     const messagesEndRef = useRef(null);
 
-    const handleSend = () => {
-        const newMessage = {
-            id: messages.length + 1,
-            name: 'You',
-            text: inputText,
-            image: 'https://example.com/path-to-your-avatar.jpg',
-            isAuthor: true,
-            timestamp: Timestamp.fromDate(new Date())
-        };
-        setMessages([...messages, newMessage]);
+    const handleSend = async () => {
+        await MessageManager.create(inputText);
         setInputText('');
     };
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = async (event) => {
         if (event.key === 'Enter') {
-            handleSend();
+            await handleSend();
         }
     };
 
@@ -59,9 +32,19 @@ export const MessagesPage = () => {
         messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
     };
 
-    useEffect(() => {
+    const setUp = async () => {
+        const messages = await MessageManager.getAll();
+        setMessages(messages);
+
         scrollToBottom();
-    }, [messages]);
+    }
+
+    // useEffect cannot handle async operations; implementing setUp function is one of the common walk-arounds
+    useEffect(() => {
+        setUp()
+            .then(() => console.log('Set up was successful'))
+            .catch((e) => console.log(`Set up failed: ${e}`));
+    }, []);
 
     return (
         <Box sx={{
