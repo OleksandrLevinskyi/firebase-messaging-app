@@ -1,14 +1,14 @@
-import {addDoc, collection, getDocs, orderBy, query, serverTimestamp, onSnapshot} from "firebase/firestore";
+import {addDoc, collection, getDocs, orderBy, query, serverTimestamp, onSnapshot, limit} from "firebase/firestore";
 import {auth, db} from "../firebase";
 
 export class MessageManager {
     static collectionName = 'messages';
 
     static async getAll() {
-        const massageQuery = query(collection(db, this.collectionName), orderBy("timestamp", "asc"));
+        const massageQuery = query(collection(db, this.collectionName), orderBy("timestamp", "desc"), limit(20));
         const querySnapshot = await getDocs(massageQuery);
 
-        return querySnapshot.docs.map(doc => {
+        return querySnapshot.docs.reverse().map(doc => {
             const data = doc.data();
 
             return {
@@ -20,11 +20,11 @@ export class MessageManager {
     }
 
     static getAllObservable(setter) {
-        const messageQuery = query(collection(db, this.collectionName), orderBy("timestamp", "asc"));
+        const messageQuery = query(collection(db, this.collectionName), orderBy("timestamp", "desc"), limit(20));
 
         // Return the unsubscribe function so the caller can stop listening when needed
         return onSnapshot(messageQuery, (querySnapshot) => {
-                const messages = querySnapshot.docs.map(doc => {
+                const messages = querySnapshot.docs.reverse().map(doc => {
                     const data = doc.data();
                     return {
                         id: doc.id,
