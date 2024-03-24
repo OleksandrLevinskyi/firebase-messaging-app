@@ -1,5 +1,5 @@
 import {Avatar, Box, Typography} from "@mui/material";
-import {blue, green} from "@mui/material/colors";
+import {blue, purple} from "@mui/material/colors";
 
 export const MessageCard = ({message}) => {
     const formatDate = (timestamp) => {
@@ -29,7 +29,7 @@ export const MessageCard = ({message}) => {
             <Avatar sx={{mx: 2}} src={message.avatarSrc} alt={message.name}/>
             <Box sx={{
                 flex: '1 1 auto',
-                backgroundColor: message.isAuthor ? green[100] : blue[100],
+                backgroundColor: message.isAuthor ? purple[100] : blue[100],
                 borderRadius: '20px',
                 py: 1,
                 px: 2,

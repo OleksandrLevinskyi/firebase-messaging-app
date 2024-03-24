@@ -1,10 +1,77 @@
 import {MessageCard} from "../components/MessageCard";
-import {Box, IconButton, TextField, Typography} from "@mui/material";
+import {AppBar, Box, IconButton, TextField, Toolbar, Typography} from "@mui/material";
 import {Timestamp} from "firebase/firestore";
-import {Send} from "@mui/icons-material";
+import {Logout, Send} from "@mui/icons-material";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import ForumIcon from "@mui/icons-material/Forum";
+import {blue, purple} from "@mui/material/colors";
 
 const dbMessages = [
+    {
+        id: 1,
+        name: 'Alice',
+        text: 'Hey, how are you?',
+        image: 'https://example.com/path-to-image-of-alice.jpg',
+        isAuthor: false,
+        timestamp: Timestamp.fromDate(new Date())
+    },
+    {
+        id: 1,
+        name: 'Alice',
+        text: 'Hey, how are you?',
+        image: 'https://example.com/path-to-image-of-alice.jpg',
+        isAuthor: false,
+        timestamp: Timestamp.fromDate(new Date())
+    },
+    {
+        id: 1,
+        name: 'Alice',
+        text: 'Hey, how are you?',
+        image: 'https://example.com/path-to-image-of-alice.jpg',
+        isAuthor: false,
+        timestamp: Timestamp.fromDate(new Date())
+    },
+    {
+        id: 1,
+        name: 'Alice',
+        text: 'Hey, how are you?',
+        image: 'https://example.com/path-to-image-of-alice.jpg',
+        isAuthor: false,
+        timestamp: Timestamp.fromDate(new Date())
+    },
+    {
+        id: 1,
+        name: 'Alice',
+        text: 'Hey, how are you?',
+        image: 'https://example.com/path-to-image-of-alice.jpg',
+        isAuthor: false,
+        timestamp: Timestamp.fromDate(new Date())
+    },
+    {
+        id: 1,
+        name: 'Alice',
+        text: 'Hey, how are you?',
+        image: 'https://example.com/path-to-image-of-alice.jpg',
+        isAuthor: false,
+        timestamp: Timestamp.fromDate(new Date())
+    },
+    {
+        id: 1,
+        name: 'Alice',
+        text: 'Hey, how are you?',
+        image: 'https://example.com/path-to-image-of-alice.jpg',
+        isAuthor: false,
+        timestamp: Timestamp.fromDate(new Date())
+    },
+    {
+        id: 1,
+        name: 'Alice',
+        text: 'Hey, how are you?',
+        image: 'https://example.com/path-to-image-of-alice.jpg',
+        isAuthor: false,
+        timestamp: Timestamp.fromDate(new Date())
+    },
     {
         id: 1,
         name: 'Alice',
@@ -26,6 +93,7 @@ const dbMessages = [
 export const MessagesPage = () => {
     const [messages, setMessages] = useState(dbMessages);
     const [inputText, setInputText] = useState('');
+    let navigate = useNavigate();
 
     const handleSend = () => {
         const newMessage = {
@@ -46,6 +114,10 @@ export const MessagesPage = () => {
         }
     };
 
+    const handleLogout = () => {
+        navigate('/');
+    };
+
     return (
         <Box sx={{
             display: 'flex',
@@ -54,12 +126,26 @@ export const MessagesPage = () => {
             width: {sm: '90%', md: '50%'},
             margin: 'auto'
         }}>
-            <Typography variant="h3" textAlign="center" sx={{backgroundColor: 'background.paper', p: 2}}>
-                Messages
-            </Typography>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                py: 2,
+                backgroundColor: 'background.paper'
+            }}>
+                <ForumIcon sx={{fontSize: "50px", mr: 2, color: blue[700]}}/>
+                <Typography variant="h5" sx={{textAlign: 'left', flexGrow: 1}}>
+                    MESSAGING APP
+                </Typography>
+                <IconButton onClick={handleLogout} sx={{marginLeft: 'auto'}}>
+                    <Logout sx={{fontSize: '2rem', color: blue[700]}}/>
+                </IconButton>
+            </Box>
 
             <Box sx={{
                 flexGrow: 1,
+                ml: 2,
+                mr: 3,
                 overflowY: 'auto',
                 width: '100%'
             }}>
@@ -79,7 +165,7 @@ export const MessagesPage = () => {
                 InputProps={{
                     endAdornment: (
                         <IconButton onClick={handleSend}>
-                            <Send/>
+                            <Send sx={{color: blue[700]}}/>
                         </IconButton>
                     ),
                     style: {borderRadius: '20px'},
