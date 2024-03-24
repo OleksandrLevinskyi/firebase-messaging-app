@@ -6,6 +6,7 @@ import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import ForumIcon from "@mui/icons-material/Forum";
 import {blue, purple} from "@mui/material/colors";
+import {AuthManager} from "../managers/AuthManager";
 
 const dbMessages = [
     {
@@ -51,7 +52,8 @@ export const MessagesPage = () => {
         }
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        await AuthManager.logOut();
         navigate('/');
     };
 

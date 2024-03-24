@@ -3,11 +3,13 @@ import ForumIcon from "@mui/icons-material/Forum";
 import GoogleIcon from "@mui/icons-material/Google";
 import {useNavigate} from "react-router-dom";
 import {blue} from "@mui/material/colors";
+import {AuthManager} from "../managers/AuthManager";
 
 export function LoginPage() {
     let navigate = useNavigate();
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
+        await AuthManager.logIn();
         navigate('/messages');
     };
 
