@@ -2,76 +2,12 @@ import {MessageCard} from "../components/MessageCard";
 import {AppBar, Box, IconButton, TextField, Toolbar, Typography} from "@mui/material";
 import {Timestamp} from "firebase/firestore";
 import {Logout, Send} from "@mui/icons-material";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import ForumIcon from "@mui/icons-material/Forum";
 import {blue, purple} from "@mui/material/colors";
 
 const dbMessages = [
-    {
-        id: 1,
-        name: 'Alice',
-        text: 'Hey, how are you?',
-        image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false,
-        timestamp: Timestamp.fromDate(new Date())
-    },
-    {
-        id: 1,
-        name: 'Alice',
-        text: 'Hey, how are you?',
-        image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false,
-        timestamp: Timestamp.fromDate(new Date())
-    },
-    {
-        id: 1,
-        name: 'Alice',
-        text: 'Hey, how are you?',
-        image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false,
-        timestamp: Timestamp.fromDate(new Date())
-    },
-    {
-        id: 1,
-        name: 'Alice',
-        text: 'Hey, how are you?',
-        image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false,
-        timestamp: Timestamp.fromDate(new Date())
-    },
-    {
-        id: 1,
-        name: 'Alice',
-        text: 'Hey, how are you?',
-        image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false,
-        timestamp: Timestamp.fromDate(new Date())
-    },
-    {
-        id: 1,
-        name: 'Alice',
-        text: 'Hey, how are you?',
-        image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false,
-        timestamp: Timestamp.fromDate(new Date())
-    },
-    {
-        id: 1,
-        name: 'Alice',
-        text: 'Hey, how are you?',
-        image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false,
-        timestamp: Timestamp.fromDate(new Date())
-    },
-    {
-        id: 1,
-        name: 'Alice',
-        text: 'Hey, how are you?',
-        image: 'https://example.com/path-to-image-of-alice.jpg',
-        isAuthor: false,
-        timestamp: Timestamp.fromDate(new Date())
-    },
     {
         id: 1,
         name: 'Alice',
@@ -94,6 +30,7 @@ export const MessagesPage = () => {
     const [messages, setMessages] = useState(dbMessages);
     const [inputText, setInputText] = useState('');
     let navigate = useNavigate();
+    const messagesEndRef = useRef(null);
 
     const handleSend = () => {
         const newMessage = {
@@ -117,6 +54,14 @@ export const MessagesPage = () => {
     const handleLogout = () => {
         navigate('/');
     };
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     return (
         <Box sx={{
@@ -152,6 +97,7 @@ export const MessagesPage = () => {
                 {messages.map((message, index) => (
                     <MessageCard key={index} message={message}/>
                 ))}
+                <div ref={messagesEndRef} />
             </Box>
 
             <TextField
