@@ -3,6 +3,10 @@ import {blue, purple} from "@mui/material/colors";
 
 export const MessageCard = ({message}) => {
     const formatDate = (timestamp) => {
+        if (!timestamp) {
+            return '';
+        }
+
         const date = timestamp.toDate();
 
         return new Intl.DateTimeFormat('en-US', {
